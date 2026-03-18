@@ -1,6 +1,9 @@
 # portfolio-projects
 Some projects I did
 
+Clone the repo:
+git clone https://github.com/LemonadeIcedTea/portfolio-projects.git
+
 Install matplotlib on your OS
 example: pip install matplotlib
 Verify by running this on a Python shell:
