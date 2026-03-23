@@ -5,8 +5,9 @@ import seaborn as sns
 
 crimes = pd.read_csv("data/crimes.csv")
 crimes.head()
+# TIME OCC is stored as an integer in HHMM format (e.g., 730 = 7:30).
+# Zero-pad to 4 digits, then take the first 2 digits as the hour (07 = 7 AM).
 crimes["hour"] = crimes["TIME OCC"].astype(str).str.zfill(4).str[:2].astype(int)
-crimes[["TIME OCC", "hour"]].head()
 
 peak_crime_hour = crimes["hour"].value_counts().idxmax()
 print(peak_crime_hour)
@@ -39,15 +40,12 @@ plt.tight_layout()
 plt.show()
 
 crimes["Vict Age"] = pd.to_numeric(crimes["Vict Age"], errors="coerce")
-#crimes.loc[crimes["Vict Age"] < 0, "Vict Age"] = np.nan
 
-#print((crimes["Vict Age"] < 0).sum())
-
-bins = [0, 17, 25, 34, 44, 54, 64, 150]
-labels = ["0-17", "18-25", "26-34", "35-44", "45-54", "55-64", "65+"]
+age_bins = [0, 17, 25, 34, 44, 54, 64, 150]
+age_group_labels = ["0-17", "18-25", "26-34", "35-44", "45-54", "55-64", "65+"]
 
 # Create a new column for victim age groups
-crimes["Vict Age Group"] = pd.cut(crimes["Vict Age"], bins=bins, labels=labels, right=True, include_lowest=True)
+crimes["Vict Age Group"] = pd.cut(crimes["Vict Age"], bins=age_bins, labels=age_group_labels, right=True, include_lowest=True)
 
 # Count the number of crimes in each age group
 victim_ages = crimes["Vict Age Group"].value_counts().sort_index()
