@@ -8,7 +8,8 @@ plt.plot(df_workout["month"], df_workout["workout_worldwide"])
 plt.xticks(rotation=90)
 plt.show()
 
-year_str = "2020"
+# Find the month where workout_worldwide peaked, take the year and convert it to a string type
+year_str = str(pd.to_datetime(df_workout.loc[df_workout["workout_worldwide"].idxmax(), "month"]).year)
 print(year_str, '\n')
 
 df_keywords = pd.read_csv("data/three_keywords.csv")
@@ -21,8 +22,10 @@ plt.xticks(rotation=90)
 plt.legend()
 plt.show()
 
+# Hardcoded: represents a known historical context (COVID peak behavior), not derivable from data alone
 peak_covid = "home workout"
-current = "gym workout"
+# Drop 'month' so only keyword values are compared in the latest row
+current = df_keywords.drop(columns="month").iloc[-1].idxmax()
 print(peak_covid)
 print(current, '\n')
 
@@ -31,13 +34,14 @@ print(df_workout_geo.loc["United States"])
 print(df_workout_geo.loc["Australia"])
 print(df_workout_geo.loc["Japan"])
 
-top_country = "United States"
+# Find which of United States, Australia, or Japan has the highest total interest across all workout types
+top_country = df_workout_geo.loc[['United States', 'Australia', 'Japan']].sum(axis=1).idxmax()
 print(top_country, '\n')
 
-# Who has the highest interest in home workouts, Philippines or Malaysia?
 df_keywords_geo = pd.read_csv("data/three_keywords_geo.csv", index_col = 0)
 print(df_keywords_geo.loc["Philippines", :])
 print(df_keywords_geo.loc["Malaysia", :])
 
-home_workout_geo = "Philippines"
+# Find whether Malaysia or Philippines has higher home workout interest
+home_workout_geo = df_keywords_geo.loc[['Malaysia', 'Philippines'], 'home_workout_2018_2023'].idxmax()
 print(home_workout_geo)
