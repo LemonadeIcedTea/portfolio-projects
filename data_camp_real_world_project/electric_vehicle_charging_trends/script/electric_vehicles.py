@@ -9,6 +9,7 @@ sales_df = pd.read_csv('data/ev_sales.csv')
 total_sales = sales_df.groupby('year')['sales'].sum()
 print(total_sales)
 ev_sales_2018 = 361315.0
+print(ev_sales_2018, '\n')
 
 electric_charging = private_df.merge(public_df, on='year', how='inner')
 
@@ -27,3 +28,4 @@ ax.legend(loc='upper left')
 
 plt.show()
 trend = 'same'
+print(trend)

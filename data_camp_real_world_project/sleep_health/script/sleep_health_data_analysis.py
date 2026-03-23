@@ -11,10 +11,7 @@ sleep_quality = sleep.groupby('Occupation')['Quality of Sleep'].mean()
 lowest_sleep_quality_occ = sleep_quality.sort_values().index[0]
 print(lowest_sleep_quality_occ)
 
-if lowest_sleep_occ == lowest_sleep_quality_occ:
-    same_occ = True
-else:
-    same_occ = False
+same_occ = lowest_sleep_occ == lowest_sleep_quality_occ
 
 normal = sleep[(sleep['BMI Category'] == 'Normal') & (sleep['Sleep Disorder'] == 'Insomnia')]
 total_normal = len(sleep[sleep['BMI Category'] == 'Normal'])
